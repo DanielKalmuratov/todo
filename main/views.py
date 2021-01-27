@@ -14,8 +14,8 @@ def modal(request):
 
 def book(request):
     book_list = Book.objects.all()
-    print(book_list)
-    return render(request, 'book.html', {"book_list": book_list})
+    favorite_books = Book.objects.all().filter(is_favorite = True)
+    return render(request, 'book.html', {"book_list": book_list, "favorite_books": favorite_books})
 
 def add_todo(request):
     form = request.POST
