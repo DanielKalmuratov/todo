@@ -1,72 +1,108 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="{% static './css/style.css' %}">
+    <link rel="stylesheet" href="{% static './css/checkbox.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Books</title>
 </head>
 <body>
-    <div class="books_container">
-        <form action="{% url 'add-book' %}" method="POST">
-            {% csrf_token %}
-            <input  type="text" 
-            class="create_input" 
-            placeholder="Название книги"
-            name = "title"
-            />
-            <input  type="text" 
-            class="create_input" 
-            placeholder="Подзаголовок"
-            name = "subtitle"
-            />
-            <input  type="text" 
-            class="create_input" 
-            placeholder="Описание"
-            name = "description"
-            />
-            <input  type="number" 
-            class="create_input" 
-            placeholder="Цена"
-            name = "price"
-            />
-            <input  type="text" 
-            class="create_input" 
-            placeholder="Жанр"
-            name = "genre"
-            />
-            <input  type="text" 
-            class="create_input" 
-            placeholder="Автор"
-            name = "author"
-            />
-            <input  type="number" 
-            class="create_input" 
-            placeholder="Год выпуска книги"
-            name = "year"
-            />
-            
-
-
-        <button class="create_button">Добавить</button>
-
-
-
-
-        </form>
+    <section>
+        <div class="create_container">
+            <form action="{% url 'add-book' %}" method="POST">
+                {% csrf_token %}
+                <input  type="text" 
+                class="create_input" 
+                placeholder="Название книги"
+                name = "title"
+                />
+                <input  type="text" 
+                class="create_input" 
+                placeholder="Подзаголовок"
+                name = "subtitle"
+                />
+                <input  type="text" 
+                class="create_input" 
+                placeholder="Описание"
+                name = "description"
+                />
+                <input  type="number" 
+                class="create_input" 
+                placeholder="Цена"
+                name = "price"
+                />
+                <input  type="text" 
+                class="create_input" 
+                placeholder="Жанр"
+                name = "genre"
+                />
+                <input  type="text" 
+                class="create_input" 
+                placeholder="Автор"
+                name = "author"
+                />
+                <input  type="number" 
+                class="create_input" 
+                placeholder="Год выпуска книги"
+                name = "year"
+                />
+            <button class="create_button">Добавить</button>
+            </form>
+        </div>
+       <div class="todo_container">
         {% for book in book_list %}
-            <div class="books_item">
-                <div class="book_header">
-                    <h2>{{book.title}}</h2>
+            <div class="todo_item">
+                
+                <div class="book_item_header">
+                        <a href=""  data-toggle="modal" data-target="#addBook{{book.id}}"><h2>{{book.title}}</h2></a>           
                     <p>{{book.author}}</p>
                 </div>
-                <div class="book_body">
-                    <p>{{book.genre}}</p>
-                    <p>
-                        {{book.description}}
-                    </p>
+                <div class="book_text">
+                    <p>{{book.subtitle}}</p>
                 </div>
+                <div class="todo_item_footer">
+                    <a href="{% url 'delete-book' book.id %}"><img src="{% static './icons/basket.png'   %}" /></a> 
+                    {% if book.is_favorite %} 
+                    <a href="{% url 'mark-book' book.id %}"><img src="{% static './icons/yellow.png'   %}" /></a>
+                    {% else %}
+                    <a href="{% url 'mark-book' book.id %}"><img src="{% static './icons/star.png'   %}" /></a>
+                    {% endif %} 
+                </div>
+
+                <div class="modal fade" id="addBook{{book.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLongTitle">Информация:</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                            <h2>{{book.title}}</h2>
+                            <p>Автор: {{book.author}}</p>
+                            <p>Жанр: {{book.genre}}</p>
+                            <p>Дата: {{book.year}}г.</p>
+                            <p>Цена: {{book.price}}сом</p>
+                            <p>{{book.description}}</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                
             </div>
         {% endfor %}
-    </div>
+       </div>
+        
+    </section>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </body>
 </html>
