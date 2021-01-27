@@ -6,4 +6,7 @@ def homepage(request):
 def test2(request):
     return render(request, 'test.html')
 
+def modal(request):
+    return render(request, 'modal.html')
+
 
