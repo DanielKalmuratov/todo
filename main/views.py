@@ -14,6 +14,7 @@ def modal(request):
 
 def book(request):
     book_list = Book.objects.all()
+    print(book_list)
     return render(request, 'book.html', {"book_list": book_list})
 
 def add_todo(request):
@@ -22,3 +23,18 @@ def add_todo(request):
     todo = ToDo(text=text)
     todo.save()
     return redirect(test2)
+
+def add_book(request):
+    form = request.POST
+    title = form['title']
+    subtitle = form['subtitle']
+    description = form['description']
+    price = form['price']
+    genre = form['genre']
+    author = form['author']
+    year = form['year']
+    
+    book = Book(title=title, subTitle=subtitle, description=description, price=price,genre=genre, author=author,year=year )
+    book.save()
+    print(Book)
+    return redirect(book)

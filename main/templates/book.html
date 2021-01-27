@@ -7,6 +7,52 @@
 </head>
 <body>
     <div class="books_container">
+        <form action="{% url 'add-book' %}" method="POST">
+            {% csrf_token %}
+            <input  type="text" 
+            class="create_input" 
+            placeholder="Название книги"
+            name = "title"
+            />
+            <input  type="text" 
+            class="create_input" 
+            placeholder="Подзаголовок"
+            name = "subtitle"
+            />
+            <input  type="text" 
+            class="create_input" 
+            placeholder="Описание"
+            name = "description"
+            />
+            <input  type="number" 
+            class="create_input" 
+            placeholder="Цена"
+            name = "price"
+            />
+            <input  type="text" 
+            class="create_input" 
+            placeholder="Жанр"
+            name = "genre"
+            />
+            <input  type="text" 
+            class="create_input" 
+            placeholder="Автор"
+            name = "author"
+            />
+            <input  type="number" 
+            class="create_input" 
+            placeholder="Год выпуска книги"
+            name = "year"
+            />
+            
+
+
+        <button class="create_button">Добавить</button>
+
+
+
+
+        </form>
         {% for book in book_list %}
             <div class="books_item">
                 <div class="book_header">
