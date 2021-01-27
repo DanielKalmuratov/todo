@@ -7,6 +7,8 @@
 </head>
 <body>
     <h2>This is test page</h2>
-    
+    {% for todo in todo_list %}
+        <h2>{{ todo.text }} {{ todo.created_ad }}</h2>
+    {% endfor %}
 </body>
 </html>
