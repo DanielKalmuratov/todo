@@ -7,3 +7,12 @@ class ToDo(models.Model):
     is_favorite = models.BooleanField(default=False)    
 
 
+class Book(models.Model):
+    title = models.CharField(max_length=50)
+    subTitle = models.CharField(max_length=100)
+    description = models.CharField(max_length=100)
+    price = models.IntegerField()
+    genre = models.CharField(max_length=100)
+    author = models.CharField(max_length=100)
+    year = models.IntegerField()
+    date = models.DateField(auto_now_add=True)
