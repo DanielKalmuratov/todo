@@ -5,123 +5,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static './css/style.css' %}">
     <link rel="stylesheet" href="{% static './css/checkbox.css' %}">
     <title>Document</title>
 </head>
 <body>
+    <nav class="navbar">
+        <div class="nav-brand">5000 Programmers</div>
+        
+        
+          <ul class="navbar-nav">
+            <li class="nav-item ">
+              <a class="nav-link" href="/">Todo </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'books/' %}">Books</a>
+            </li>
+            
+          </ul>
+       
+      </nav>
+
+
     <section>
         <div class="create_container">
-            <input type="text" class="create_input" placeholder="Напишите сюда новую задачу"/>
-            <button class="create_button">Добавить</button>
+            <form action="{% url 'add-todo' %}" method="POST">
+                {% csrf_token %}
+
+                <input  type="text" 
+                        class="create_input" 
+                        placeholder="Напишите сюда новую задачу"
+                        name = "todo_text"
+                        />
+                <button class="create_button">Добавить</button>
+            </form>
+            
         </div>
 
         <div class="todo_container">
-            <div class="todo_item marked">
+            {% for todo in todo_list %}
+            <div class="todo_item
+            {% if todo.is_favorite %}
+                marked
+            {% elif todo.is_closed %}
+                done
+            {% endif %}
+            ">
                 <div class="todo_item_header">
                     <label class="checkbox_container">
-                        <input type="checkbox"/>
+                        <input type="checkbox" 
+                        {% if todo.is_closed %}
+                        checked
+                        {% else %}
+                        null
+                        {% endif %}
+                        />
                         <span class="checkmark"></span>
                     </label>
-                    <h4>Buy Milk</h4>
+                    <h4><a href="{%  url 'close-todo' todo.id   %}">{{ todo.text }}</a></h4>
                 </div>
                 
                 <div class="todo_item_footer">
-                    <p>17.11.2020 <span>17:15</span></p>
+                    <p>{{ todo.created_ad }}</p>
                     <div class="action_buttons">
-                        <img src="./icons/basket.png" />
-                        <img src="./icons/yellow.png" />
+                        
+                        <a href="{% url 'delete-todo' todo.id %}"><img src="{% static './icons/basket.png' %}" /></a>
+                        
+                        {% if todo.is_favorite%} 
+                            <a href="{% url 'mark-todo' todo.id %}"><img src="{% static './icons/yellow.png' %}" /></a>
+                        {% else %}
+                            <a href="{% url 'mark-todo' todo.id %}"><img src="{% static './icons/star.png' %}" /></a>
+                        {% endif %}    
                     </div>
-                </div>
-            </div>
-            <div class="todo_item done">
-                <div class="todo_item_header">
-                    <label class="checkbox_container">
-                        <input type="checkbox"/>
-                        <span class="checkmark"></span>
-                    </label>
-                    <h4>Buy Milk</h4>
                 </div>
                 
-                <div class="todo_item_footer">
-                    <p>17.11.2020 <span>17:15</span></p>
-                    <div class="action_buttons">
-                        <img src="./icons/basket.png" />
-                        <img src="./icons/star.png" />
-                    </div>
-                </div>
             </div>
-            <div class="todo_item">
-                <div class="todo_item_header">
-                    <label class="checkbox_container">
-                        <input type="checkbox"/>
-                        <span class="checkmark"></span>
-                    </label>
-                    <h4>Buy Milk</h4>
-                </div>
-                
-                <div class="todo_item_footer">
-                    <p>17.11.2020 <span>17:15</span></p>
-                    <div class="action_buttons">
-                        <img src="./icons/basket.png" />
-                        <img src="./icons/star.png" />
-                    </div>
-                </div>
-            </div>
-            <div class="todo_item done">
-                <div class="todo_item_header">
-                    <label class="checkbox_container">
-                        <input type="checkbox"/>
-                        <span class="checkmark"></span>
-                    </label>
-                    <h4>Buy Milk</h4>
-                </div>
-                
-                <div class="todo_item_footer">
-                    <p>17.11.2020 <span>17:15</span></p>
-                    <div class="action_buttons">
-                        <img src="./icons/basket.png" />
-                        <img src="./icons/star.png" />
-                    </div>
-                </div>
-            </div>
-            <div class="todo_item">
-                <div class="todo_item_header">
-                    <label class="checkbox_container">
-                        <input type="checkbox"/>
-                        <span class="checkmark"></span>
-                    </label>
-                    <h4>Buy Milk</h4>
-                </div>
-                
-                <div class="todo_item_footer">
-                    <p>17.11.2020 <span>17:15</span></p>
-                    <div class="action_buttons">
-                        <img src="./icons/basket.png" />
-                        <img src="./icons/star.png" />
-                    </div>
-                </div>
-            </div>
-            <div class="todo_item marked">
-                <div class="todo_item_header">
-                    <label class="checkbox_container">
-                        <input type="checkbox"/>
-                        <span class="checkmark"></span>
-                    </label>
-                    <h4>Buy Milk</h4>
-                </div>
-                
-                <div class="todo_item_footer">
-                    <p>17.11.2020 <span>17:15</span></p>
-                    <div class="action_buttons">
-                        <img src="./icons/basket.png" />
-                        <img src="./icons/yellow.png" />
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
             
         </div>
     </section>
-    
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script> -->
 </body>
 </html>

@@ -13,6 +13,7 @@ section{
 }
 .create_container{
     width: 80%;
+    margin: 0 auto;
 }
 .create_input{
     padding: 12px 5px;
@@ -127,6 +128,7 @@ section{
 }
 .book_container{
     display: grid;
+    margin: 10px auto;
     width: 90%;
     grid-template-columns: 2fr 5fr;
 }
@@ -146,6 +148,31 @@ section{
     
 }
 
+.navbar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 10%;
+    background-color: #2b2e83;
+}
 
-
-
+.nav-brand{
+    color: #e0e0e0;
+    font-size: 28px;
+}
+.navbar-nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    
+}
+.navbar-nav a{
+    color: #e0e0e0;
+    font-size: 18px;
+    text-decoration: none;
+    margin-right: 15px;
+    
+}
+.nav-item{
+    list-style: none;
+}
